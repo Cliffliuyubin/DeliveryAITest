@@ -31,7 +31,7 @@ DeliveryAITest
 | `docs/扩展字段.md` | 多仓扩展字段与 flag 启用机制 |
 | `docs/协议字段参考.md` | 协议字段速查 |
 | `examples/log/example.log` | 结构化日志样例（含 ERROR 路径） |
-| `.github/workflows/ci.yml` | CI：build / validate / test / 体积 / 合规 |
+| `docs/ci-workflow-example.yml` | 可选 CI：build / validate / test / 体积 / 合规（用户按需部署） |
 | `package.json` | npm scripts：`test` / `validate:source` / `validate:contract` / `check:compliance` / `test:spider` |
 
 ## 2. 5 分钟跑通全流程

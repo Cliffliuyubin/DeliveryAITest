@@ -41,4 +41,4 @@ jobs:
 
       - name: Compliance check (L-1 / L-3)
         run: bash tools/scripts/check-compliance.sh
-        continue-on-error: true  # 默认 denylist 为空 → 总是 exit 0；但 denylist 启用后会拦截
+        continue-on-error: true

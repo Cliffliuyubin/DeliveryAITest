@@ -64,8 +64,8 @@ echo "[compliance] checking sensitive headers (L-3)..."
 SENSITIVE_KEYS=("Authorization:" "Proxy-Authorization:" "X-API-Key:")
 sensitive_violation=0
 for key in "${SENSITIVE_KEYS[@]}"; do
-  # 仅在 src/spiders/**.js 与 dist/** 与 tools/** 中匹配；README 文档中允许出现
-  if grep -rInF --binary-files=without-match -- "$key" "${ROOT}/src/spiders" "${ROOT}/dist" "${ROOT}/tools" 2>/dev/null; then
+  # 仅在 src/spiders 与 dist 两个产物目录中匹配；脚本自身实现（tools/scripts）和 README/docs 不参与 L-3 自动校验
+  if grep -rInF --binary-files=without-match -- "$key" "${ROOT}/src/spiders" "${ROOT}/dist" 2>/dev/null; then
     echo "[compliance] WARN: 命中敏感字段 '$key'（应通过 mask 暴露而非明文）" >&2
     sensitive_violation=$((sensitive_violation + 1))
   fi
