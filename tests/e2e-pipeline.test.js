@@ -216,7 +216,13 @@ test('check-compliance.sh: passes with default empty denylist (REQ-011 L-1)', ()
 test('run-spider.js: drives dist example-mock.js through 6 interfaces', () => {
   const r = runNode(RUNNER, [path.join(DIST_SPIDERS, 'example-mock.js'), '--api=all']);
   assert.equal(r.ok, true, 'run-spider.js failed: ' + r.stderr + r.stdout);
-  const parsed = JSON.parse(r.stdout);
+  // run-spider.js 默认会把结构化日志写 stdout 再追加 JSON dump；
+  // 这里从混合输出中提取首个 { 到末尾 } 之间的 JSON 段。
+  const firstBrace = r.stdout.indexOf('{');
+  const lastBrace = r.stdout.lastIndexOf('}');
+  assert.ok(firstBrace >= 0 && lastBrace > firstBrace,
+    'run-spider.js stdout 未找到 JSON dump 段: ' + r.stdout.slice(0, 200));
+  const parsed = JSON.parse(r.stdout.slice(firstBrace, lastBrace + 1));
   for (const api of ['init', 'homeContent', 'categoryContent', 'detailContent', 'playerContent', 'searchContent']) {
     assert.ok(parsed[api], 'run-spider output missing api: ' + api);
     assert.equal(parsed[api].error, null,
