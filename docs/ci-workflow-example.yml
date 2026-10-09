@@ -1,0 +1,44 @@
+name: tvbox-crawler-and-source-ci
+
+on:
+  push:
+    branches:
+      - main
+      - feat/tvbox-crawler-and-source-*
+  pull_request:
+    branches:
+      - main
+      - feat/tvbox-crawler-and-source-*
+
+jobs:
+  lint-and-test:
+    name: lint / validate / test
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Build self-contained spiders
+        run: node tools/scripts/build-spider.js
+
+      - name: Validate source.json (contract + JSON Schema)
+        run: node tools/scripts/validate-source.js dist/source.json tools/schemas/source.schema.json
+
+      - name: Run unit tests
+        run: node --test tests/*.test.js
+
+      - name: Source JSON size check (NFR: <= 200 KB)
+        run: |
+          SIZE=$(stat -c%s dist/source.json)
+          echo "source.json size = ${SIZE} bytes"
+          test "${SIZE}" -le 204800
+
+      - name: Compliance check (L-1 / L-3)
+        run: bash tools/scripts/check-compliance.sh
+        continue-on-error: true

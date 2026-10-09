@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Cliffliuyubin/DeliveryAITest/source.schema.json",
+  "title": "TVBox Source JSON",
+  "description": "TVBox 源 JSON Schema；顶层仅允许 sites / parses / rules / flags",
+  "type": "object",
+  "required": ["sites"],
+  "additionalProperties": false,
+  "properties": {
+    "sites": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["key", "name", "api", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "key": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "type": { "type": "number", "enum": [0, 1, 2, 3, 4] },
+          "api": {
+            "type": "string",
+            "description": "Spider 入口：URL / jar 路径或 JS 文件路径",
+            "pattern": "^(https?://|jar:|file:|/|.*\\.js)"
+          },
+          "jar": {
+            "type": "string",
+            "description": "蜘蛛包 URL，与 api 二选一或多 client 同时存在"
+          },
+          "searchable": { "type": "number", "enum": [0, 1] },
+          "quickSearch": { "type": "number", "enum": [0, 1] },
+          "filterable": { "type": "number", "enum": [0, 1] },
+          "playerType": { "type": "number" },
+          "timeout": { "type": "number", "minimum": 100, "maximum": 60000 },
+          "ua": { "type": "string" },
+          "headers": {
+            "type": "object",
+            "description": "请求头；敏感字段会被日志自动 mask"
+          },
+          "proxy": { "type": "string" },
+          "ext": {
+            "type": "string",
+            "description": "扩展 base64 字段（fork 字段；本仓库以注释形式提供）"
+          },
+          "custom": {
+            "type": "object",
+            "description": "自定义参数，spider 通过 config.custom 访问"
+          }
+        }
+      }
+    },
+    "parses": {
+      "type": "array",
+      "description": "解析器配置（多仓扩展）；与 sites 互相独立",
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "number" },
+          "url": { "type": "string" },
+          "header": { "type": "string" },
+          "parse": { "type": "number" }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "description": "嗅探 / 云加速 / UA 注入规则；fork 扩展字段在 flags 启用",
+      "items": { "type": "object", "additionalProperties": true }
+    },
+    "flags": {
+      "type": "array",
+      "description": "扩展字段开关；如 multi_warehouse_ext / allow_short_link 等",
+      "items": { "type": "string" }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "tvbox-crawler-and-source",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TVBox-compatible Spider tools and source JSON config",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "main": "src/lib/index.js",
+  "scripts": {
+    "test": "node --test tests/",
+    "test:spider": "node tools/scripts/run-spider.js",
+    "validate:source": "node tools/scripts/validate-source.js dist/source.json",
+    "validate:contract": "node tools/scripts/validate-source.js dist/source.json tools/schemas/source.schema.json",
+    "check:compliance": "bash tools/scripts/check-compliance.sh",
+    "lint:json": "node tools/scripts/validate-source.js dist/source.json tools/schemas/source.schema.json"
+  },
+  "devDependencies": {}
+}
