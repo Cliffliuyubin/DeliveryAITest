@@ -1,0 +1,11 @@
+node_modules/
+coverage/
+.nyc_output/
+.cache/
+.tmp/
+*.log
+!examples/log/*.log
+.DS_Store
+.vscode/
+.idea/
+*.tsbuildinfo

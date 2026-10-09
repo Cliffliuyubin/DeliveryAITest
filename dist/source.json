@@ -1,0 +1,63 @@
+{
+  "sites": [
+    {
+      "key": "example-mock",
+      "name": "示例·Mock 站点",
+      "type": 1,
+      "api": "https://<owner>.github.io/<repo>/spiders/example-mock.js",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ua": "Mozilla/5.0 (TVBox-Compatibility; Example-Mock)",
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (TVBox-Compatibility; Example-Mock)",
+        "Accept": "application/json, text/plain, */*",
+        "X-Mock-Source": "tvbox-crawler-and-source"
+      },
+      "custom": {
+        "timeoutMs": 4000,
+        "mock": true,
+        "siteDescription": "内置合成数据 Spider；不抓取真实第三方资源站（REQ-008）"
+      }
+    },
+    {
+      "key": "example-public",
+      "name": "示例·公共模板",
+      "type": 1,
+      "api": "https://<owner>.github.io/<repo>/spiders/_template.js",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 0,
+      "ua": "Mozilla/5.0 (TVBox-Compatibility; Example-Public)",
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (TVBox-Compatibility; Example-Public)",
+        "Accept": "application/json"
+      },
+      "custom": {
+        "timeoutMs": 4000,
+        "enabled": true,
+        "siteDescription": "模板 spider；接入真实站点前必须先完成 §3.7 合规审核"
+      }
+    }
+  ],
+  "parses": [
+    {
+      "name": "默认解析",
+      "type": 0,
+      "url": "",
+      "parse": 0,
+      "header": ""
+    }
+  ],
+  "rules": [
+    {
+      "host": "*",
+      "rule": [],
+      "ua": "Mozilla/5.0 (TVBox-Compatibility; +https://github.com/tvbox)"
+    }
+  ],
+  "flags": [
+    "multi_warehouse_ext",
+    "in_memory_mock_first"
+  ]
+}

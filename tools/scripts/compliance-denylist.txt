@@ -1,0 +1,6 @@
+# 默认空 denylist。
+# 合规检查以"用户提交清单优先"为原则；本文件用作兜底占位。
+# 如需启用 L-1 自动拦截，请向本文件追加 IP / 域名 / 关键路径前缀（每行一条）。
+# 例：
+# some-known-infringing-site.example
+# /api/infringed-path

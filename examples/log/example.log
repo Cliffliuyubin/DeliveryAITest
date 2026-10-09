@@ -1,0 +1,21 @@
+# 日志样例：示例 Spider 端到端运行输出（来自 tools/scripts/run-spider.js src/spiders/example-mock.js）
+# 时间：示例（仅展示日志形态；生产环境请按 RFC3339 落盘）
+
+[tvbox][example-mock][init] status=200 elapsed=0ms url=null error=null
+[tvbox][example-mock][homeContent] status=200 elapsed=1ms url=in-memory error=null
+[tvbox][example-mock][categoryContent] status=200 elapsed=1ms url=in-memory:movie?page=1 error=null
+[tvbox][example-mock][detailContent] status=200 elapsed=1ms url=in-memory error=null
+[tvbox][example-mock][playerContent] status=200 elapsed=1ms url=in-memory:m001 error=null
+[tvbox][example-mock][searchContent] status=200 elapsed=1ms url=in-memory:q=示例 error=null
+
+# === 异常路径：网络 5xx ===
+[tvbox][example-mock][fetch] status=502 elapsed=1245ms url=https://api.example.invalid/list?page=1 error=null
+[tvbox][example-mock][categoryContent] status=null elapsed=0ms url=null error=http_status_502
+
+# === 异常路径：超时 ===
+[tvbox][example-mock][fetch] status=network elapsed=5008ms url=https://slow.example.invalid/ping error=AbortError
+[tvbox][example-mock][categoryContent] status=null elapsed=0ms url=null error=network_error
+
+# === 异常路径：JSON 解析失败 ===
+[tvbox][example-mock][fetch] status=200 elapsed=312ms url=https://api.example.invalid/json-broken error=null
+[tvbox][example-mock][detailContent] status=null elapsed=0ms url=null error=json_parse_failed
